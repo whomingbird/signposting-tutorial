@@ -1,26 +1,25 @@
-# bioschemas-ghpages-markup-tutorial
+# signposting-tutorial
 
 ## Overview
-* __Name:__ Tutorial on adding Bioschemas markup to GitHub pages
-* __Description:__ This tutorial shows how to add Bioschemas markup to GitHub pages. It uses a simple GitHub page hosted in the gh-pages branch to create a sample project page, i.e., as learners could do with their own GitHub projects. As an example, it uses the software and data corresponding to the released project [TREC-doc-2-doc-relevance](https://github.com/zbmed-semtec/TREC-doc-2-doc-relevance), a web-based interface to add document-to-document relevance assessments to pairs of documents retrieved from [TREC 2005 Genomics Track](https://trec.nist.gov/data/genomics/05/genomics.qrels.large.txt). 
-* __Keywords:__ Bioschemas, schema.org, structured markup, GitHub pages
+* __Name:__ Tutorial on adding Signposting to GitHub pages
+* __Description:__ This tutorial shows how to add Signposting to GitHub pages. It uses a simple GitHub page hosted in the `docs/` folder to create a sample project page, i.e., as learners could do with their own GitHub projects. As an example, it uses the dataset corresponding to the released project [TREC-doc-2-doc-relevance](https://github.com/zbmed-semtec/TREC-doc-2-doc-relevance), a web-based interface to add document-to-document relevance assessments to pairs of documents retrieved from [TREC 2005 Genomics Track](https://trec.nist.gov/data/genomics/05/genomics.qrels.large.txt). 
+* __Keywords:__ Signposting, GitHub pages
 
 <img src="./icons/question.svg" width="16" height="16"/> __Questions__
-* How can I add Bioschemas markup to GitHub pages?
-* Can I also use schema.org types not included in Bioschemas?
-* How can I use Bioschemas profiles? In particular [ComputationalTool](https://bioschemas.org/profiles/ComputationalTool/1.0-RELEASE) and [Dataset](https://bioschemas.org/profiles/Dataset/1.1-DRAFT) (bonus, we also use [TrainingMaterial](https://bioschemas.org/profiles/TrainingMaterial/1.0-RELEASE) to describe the tutorial itself)
+* How can I add Signposting to GitHub pages?
+* How can I include external metadata in my signposting?
+* How
 
 <img src="./icons/bullseye.svg" width="16" height="16"/> __Learning outcomes__
-* Describe how schema.org and Bioschemas markup can be embedded to GitHub pages
-* Use schema.org and Bioschemas profiles on GitHub pages
+* Describe how Signposting can be embedded in GitHub pages
+* Understanding of Signposting limitation of static content-delivery networks
 * Use schema and Bioschemas validators
 
 <img src="./icons/circle-check.svg" width="16" height="16"/> __Requirements__
-* Understanding of what is Bioschemas and what are Bioschemas types and profiles
+* Brief understanding of Signposting
 * Familiarity on how to use GitHub 
 * Basic knowledge on how to use GitHub pages. More information at [GitHub Pages](https://pages.github.com/)
-* Familiarity with JSON-LD
-* Basic knowledge on Markdown
+* Familiarity with HTML
 * Knowledge of develop tools on a browser
 
 <img src="./icons/hourglass-half.svg" width="16" height="16"/> __Time estimation__ 30 minutes
@@ -43,17 +42,25 @@
 
 ### Agenda
 In this tutorial we will cover:
-* [Creating this GitHub page](#creating-this-github-page)
-* [Adding schema.org and Bioschemas markup](#adding-schemaorg-and-bioschemas-markup)
-* [Visualizing the structured markup](#visualizing-the-structured-markup)
-* [Validating the pages against the schema Validator](#validating-the-pages-against-the-schema-validator)
-* [Validating against the Rich Results Test](#validating-the-pages-against-the-rich-results-test)
-* [Validating the pages against FAIR-Checker/Bioschemas validator](#validating-the-pages-against-fair-checkerbioschemas-validator)
-* [Creating a sitemap](#creting-a-sitemap)
-* [Try it out](#try-it-out)
+- [signposting-tutorial](#signposting-tutorial)
+  - [Overview](#overview)
+  - [Learning experience](#learning-experience)
+    - [Agenda](#agenda)
+    - [Creating this GitHub Page](#creating-this-github-page)
+    - [Adding schema.org and Bioschemas markup](#adding-schemaorg-and-bioschemas-markup)
+      - [Using schema.org types](#using-schemaorg-types)
+      - [Using Bioschemas profiles](#using-bioschemas-profiles)
+    - [Visualizing the structured markup](#visualizing-the-structured-markup)
+    - [Validating the pages against the Schema Validator](#validating-the-pages-against-the-schema-validator)
+    - [Validating the pages against the Rich Results Test](#validating-the-pages-against-the-rich-results-test)
+    - [Validating the pages against FAIR-Checker/Bioschemas validator](#validating-the-pages-against-fair-checkerbioschemas-validator)
+    - [Creting a Sitemap](#creting-a-sitemap)
+    - [Try it out](#try-it-out)
+  - [What is next?](#what-is-next)
+  - [Acknowledgements](#acknowledgements)
 
 ### Creating this GitHub Page
-Let's start by forking [this repository](https://github.com/zbmed-semtec/bioschemas-ghpages-markup-tutorial) for your own purposes. Once forked, go to settings
+Let's start by forking [this repository](https://github.com/stain/signposting-tutorial) for your own purposes. Once forked, go to settings
 
 ![Settings](./images/settings.png)
 
@@ -63,7 +70,7 @@ As this repo does have a gh-pages branch, it will use it. If such branch would n
 
 ![GitHub Pages](./images/pages.png)
 
-In a matter of minutes, your site will be live. The pages corresponding to the examples used in this tutorial are available at [https://zbmed-semtec.github.io/bioschemas-ghpages-markup-tutorial/](https://zbmed-semtec.github.io/bioschemas-ghpages-markup-tutorial/)
+In a matter of minutes, your site will be live. The pages corresponding to the examples used in this tutorial are available at [https://stain.github.io/signposting-tutorial/](https://stain.github.io/signposting-tutorial/)
 
 ![Published pages](./images/pages-published.png)
 
@@ -84,7 +91,7 @@ Then you add the type and id of what you are describing, for instace a `bioschem
 
 For the rest of the markup, you need to see what the Bioschemas profile recommends ([keep reading, more information below](#using-bioschemas-profiles)).
 
-Have a look to the pages that we have created, one for the [code and corresponding release](https://zbmed-semtec.github.io/bioschemas-ghpages-markup-tutorial/software.html), another for a [dataset created from data collected by the software](https://zbmed-semtec.github.io/bioschemas-ghpages-markup-tutorial/software.html).
+Have a look to the pages that we have created, one for the [code and corresponding release](https://stain.github.io/signposting-tutorial/software.html), another for a [dataset created from data collected by the software](https://stain.github.io/signposting-tutorial/software.html).
 
 The [software page] has markup for two elements, `schema:SoftareSourceCode` and `bioschemas:ComputationalTool`. 
 
@@ -219,7 +226,7 @@ If you use Bioschemas markup on your website, you can also add it to the "live d
 
 Once the markup is in place and the page is live, you can use the developers tools in a browser to visualize the markup. You can use the `inspect` tool in e.g., Chrome, Firefox or Edge. 
 
-Go to the [software page](https://zbmed-semtec.github.io/bioschemas-ghpages-markup-tutorial/software.html) and use the `inspect` tool for any element. You should see the HTML.
+Go to the [software page](https://stain.github.io/signposting-tutorial/software.html) and use the `inspect` tool for any element. You should see the HTML.
 
 ![Inspect HTML](./images/inspect.png)
 
@@ -292,11 +299,11 @@ This is how we have embedded the Bioschemas markup on the page
 
 ### Validating the pages against the Schema Validator
 
-Go to [Schema validator](https://validator.schema.org/). Add the URL for either the [software page](https://zbmed-semtec.github.io/bioschemas-ghpages-markup-tutorial/software.html) or the [dataset page](https://zbmed-semtec.github.io/bioschemas-ghpages-markup-tutorial/dataset.html) and click on "Run Test"
+Go to [Schema validator](https://validator.schema.org/). Add the URL for either the [software page](https://stain.github.io/signposting-tutorial/software.html) or the [dataset page](https://stain.github.io/signposting-tutorial/dataset.html) and click on "Run Test"
 
 ![Schema validator](./images/schema-validator-url.png)
 
-In the case of the [software page](https://zbmed-semtec.github.io/bioschemas-ghpages-markup-tutorial/software.html), it identifies and validates the two upper objects corresponding to `schema:WebPage` and `schema:SoftwareSourceCode` but it does not find `bioschemas:ComputationalTool` (which corresponds to a `schema:SoftwareApplication`)
+In the case of the [software page](https://stain.github.io/signposting-tutorial/software.html), it identifies and validates the two upper objects corresponding to `schema:WebPage` and `schema:SoftwareSourceCode` but it does not find `bioschemas:ComputationalTool` (which corresponds to a `schema:SoftwareApplication`)
 
 You can run the test again with a "Code Snippet" by copying and pasting the code embedded on the page, the results will be the same. However, if you try and validate a code snippet containing only one element, the inner element `bioschemas:ComputationalTool`, the Schema Validator will identify and validate it (tested on 2024-02-05).
 
@@ -307,11 +314,11 @@ There is another schema.org validator, currently the one recommended by Google. 
 
 ![Rich test](./images/rich-test.png)
 
-If you try the [software page](https://zbmed-semtec.github.io/bioschemas-ghpages-markup-tutorial/software.html), it will identify some errors with `schema:SoftwareApplication`. Yes, it does identify the inner element! As there is an error, only the error will be shown, nothing regarding the other elements. It looks like our `bioschemas:ComputationalTool` is missing some important elements (for Google, and you will see also for Bioschemas).
+If you try the [software page](https://stain.github.io/signposting-tutorial/software.html), it will identify some errors with `schema:SoftwareApplication`. Yes, it does identify the inner element! As there is an error, only the error will be shown, nothing regarding the other elements. It looks like our `bioschemas:ComputationalTool` is missing some important elements (for Google, and you will see also for Bioschemas).
 
 ![Rich test result](./images/rich-test-result.png)
 
-If you try the [dataset page](https://zbmed-semtec.github.io/bioschemas-ghpages-markup-tutorial/dataset.html), one correct element will be identified. 
+If you try the [dataset page](https://stain.github.io/signposting-tutorial/dataset.html), one correct element will be identified. 
 
 ![Rich test result](./images/rich-test-result-2.png)
 
@@ -320,7 +327,7 @@ Did you notice that nor the Schema Validator neither the Rich Results Test pay a
 ### Validating the pages against FAIR-Checker/Bioschemas validator
 Let's try now a validator specific for Bioschemas. Go to [FAIR-Checker](https://fair-checker.france-bioinformatique.fr/) and click on the blue button "Inspect". 
 
-On Step 1, add the URL for either the [software page](https://zbmed-semtec.github.io/bioschemas-ghpages-markup-tutorial/software.html) or the [dataset page](https://zbmed-semtec.github.io/bioschemas-ghpages-markup-tutorial/dataset.html) and click on "Build Knowledge Graph"
+On Step 1, add the URL for either the [software page](https://stain.github.io/signposting-tutorial/software.html) or the [dataset page](https://stain.github.io/signposting-tutorial/dataset.html) and click on "Build Knowledge Graph"
 
 ![Inspector Step 1](./images/checker-step1.png)
 
@@ -342,7 +349,7 @@ We are missing some of the _recommended_ properties and the validator indicates 
 ### Creting a Sitemap
 If you want to make it easier for machines to crawl your website (and this could be a good idea when you have markup and you want to enable easy integration into aggregators), consider adding a sitemap.xml to your website.
 
-We have used [XML-Sitemaps](https://www.xml-sitemaps.com/) to create [the one for the GitHub pages used in this tutorial](https://zbmed-semtec.github.io/bioschemas-ghpages-markup-tutorial/sitemap.xml). 
+We have used [XML-Sitemaps](https://www.xml-sitemaps.com/) to create [the one for the GitHub pages used in this tutorial](https://stain.github.io/signposting-tutorial/sitemap.xml). 
 
 Our sitemap looks like
 
@@ -355,17 +362,17 @@ Our sitemap looks like
             http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
 <!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
   <url>
-    <loc>https://zbmed-semtec.github.io/bioschemas-ghpages-markup-tutorial/</loc>
+    <loc>https://stain.github.io/signposting-tutorial/</loc>
     <lastmod>2024-02-05T14:31:07+00:00</lastmod>
     <priority>1.00</priority>
   </url>
   <url>
-    <loc>https://zbmed-semtec.github.io/bioschemas-ghpages-markup-tutorial/software.html</loc>
+    <loc>https://stain.github.io/signposting-tutorial/software.html</loc>
     <lastmod>2024-02-05T14:31:07+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://zbmed-semtec.github.io/bioschemas-ghpages-markup-tutorial/dataset.html</loc>
+    <loc>https://stain.github.io/signposting-tutorial/dataset.html</loc>
     <lastmod>2024-02-05T14:31:07+00:00</lastmod>
     <priority>0.80</priority>
   </url>
@@ -384,8 +391,8 @@ We covered a manual addition of schema.org and Bioschemas markup to GitHub pages
 We also briefly mentioned sitemaps with much of a context. We invite to get more information on what they are and why they are useful.
 
 ## Acknowledgements
-This tutorial is based on [bioschemas-github-markup-example](https://github.com/zbmed-semtec/bioschemas-github-markup-example) and [Adding schema.org to a GitHub Pages site](https://bioschemas.org/tutorials/howto/howto_add_github).
+This tutorial is based on [bioschemas-ghpages-markup-tutorial](https://github.com/zbmed-semtec/bioschemas-ghpages-markup-tutorial), [bioschemas-github-markup-example](https://github.com/zbmed-semtec/bioschemas-github-markup-example) and [Adding schema.org to a GitHub Pages site](https://bioschemas.org/tutorials/howto/howto_add_github).
 
-LJC has received fundings from the [German Research Foundation (DFG)](https://www.dfg.de/en) via the grant for NFDI4DataScience No. 460234259](https://gepris.dfg.de/gepris/projekt/460234259)
+LJC has received fundings from the [German Research Foundation (DFG)](https://www.dfg.de/en) via the grant for NFDI4DataScience No. [460234259](https://gepris.dfg.de/gepris/projekt/460234259)
 
 We use free SVG icons from [Font Awesone](https://fontawesome.com/)
