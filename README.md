@@ -56,7 +56,8 @@ In this tutorial we will cover:
     - [Where to add Signposting?](#where-to-add-signposting)
     - [Adding a persistent identifier](#adding-a-persistent-identifier)
       - [Using a w3id persistent identifier](#using-a-w3id-persistent-identifier)
-    - [Specify the type](#specify-the-type)
+    - [Specifying the resource type](#specifying-the-resource-type)
+    - [Specifying authors](#specifying-authors)
   - [Try it out](#try-it-out)
     - [Command line / Python](#command-line--python)
     - [Signposting in browser](#signposting-in-browser)
@@ -79,7 +80,8 @@ As this repo does have a gh-pages branch, it will use it. If such branch would n
 
 ![Screenshot of GitHub Pages setting](images/pages.png "GitHub Pages")
 
-In a matter of minutes, your site will be live. The pages corresponding to the examples used in this tutorial are available at [https://stain.github.io/signposting-tutorial/](https://stain.github.io/signposting-tutorial/)
+In a matter of minutes, your site will be live. The pages corresponding to the examples used in this tutorial are available at <https://stain.github.io/signposting-tutorial/> and corresponding pages should appear by replacing `stain` with your GitHub username.
+
 
 ![Screenshot: Your pages are live](images/pages-published.png "GitHub Pages published")
 
@@ -157,12 +159,12 @@ Towards the top of the file, you will find two tags we will expand:
 
 
 ```html
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"  
-        rel="stylesheet" integrity="sha384-EVSTQN3/..." crossorigin="anonymous">
+<!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"  
+    rel="stylesheet" integrity="sha384-EVSTQN3/..." crossorigin="anonymous">
 
-    <!-- Copy and modify below line to add Signposting -->    
-    <link href="" rel="self" />
+<!-- Copy and modify below line to add Signposting -->    
+<link href="" rel="self" />
 ```
 
 The first line shows how we are using the existing HTML mechanism for linking, `rel=stylesheet` tells the browser how to add the styling using the linked Bootstrap theme.
@@ -174,7 +176,7 @@ Make sure you add the new links within the `<head> .... </head>` section, as rec
 
 ### Adding a persistent identifier
 
-The [FAIR Guiding Principles](https://doi.org/10.1038/sdata.2016.18) include:
+<img src="./icons/citation.svg" width="16" height="16" alt="Literature:" /> The [FAIR Guiding Principles](https://doi.org/10.1038/sdata.2016.18) include:
 
 > F1. (meta)data are assigned a globally unique and persistent identifier  
 > ...  
@@ -189,7 +191,7 @@ The original entry for this dataset has a DOI `10.5281/zenodo.7338056` -- howeve
 * <img src="./icons/pen-to-square.svg" width="16" height="16" alt="Task" /> Modify docs/7338056/index.html so that it includes the signposting for the DOI `10.5281/zenodo.7338056`:
 
 ```html
-    <link href="https://doi.org/10.5281/zenodo.7338056" rel="cite-as" />
+<link href="https://doi.org/10.5281/zenodo.7338056" rel="cite-as" />
 ```
 
 #### Using a w3id persistent identifier
@@ -198,15 +200,15 @@ Note however that the purpose of `cite-as` is not to give any odd scholarly cita
 alt text
     https://w3id.org/signposting-tutorial/{user}.{number}
 
-Modify the below signposting to reflect your username, and use this instead as a `cite-as`:
+Add the below signposting to reflect your username, and use this instead as a `cite-as`:
 
 ```html
-    <link href="https://w3id.org/signposting-tutorial/stain.7338056" rel="cite-as" />
+<link href="https://w3id.org/signposting-tutorial/stain.7338056" rel="cite-as" />
 ```
 
-Note that from the [FAIR Signposting level 1](https://signposting.org/FAIR/#level1) profile there should be only one `cite-as`, so delete the doi.org version.
+Note that from the [FAIR Signposting level 1](https://signposting.org/FAIR/#level1) profile there should be only one `cite-as`, so in the doi.org version replace the link relation to `rel=related` or delete the line.
 
-If you manage a repository, you likely already assign persistent identifiers that can be used with `cite-as` -- if not, consider these resources:
+<img src="./icons/citation.svg" width="16" height="16" alt="Literature:" /> If you manage a repository, you likely already assign persistent identifiers that can be used with `cite-as` -- if not, consider these resources:
 
 * [Identifiers for the 21st century](https://doi.org/10.1371/journal.pbio.2001414): How to design, provision, and reuse persistent identifiers to maximize utility and impact of life science data
 * [DataCite: Create DOIs](https://datacite.org/create-dois/)
@@ -214,7 +216,31 @@ If you manage a repository, you likely already assign persistent identifiers tha
 * [b2handle](https://www.eudat.eu/services/userdoc/b2handle)
 
 
-### Specify the type
+### Specifying the resource type
+
+The FAIR Signposting requires a `type` to classify the scholarly object, in our case a CSV file. 
+
+* <img src="./icons/citation.svg" width="16" height="16" alt="Literature:" /> Browse the [Schema.org hierarchy](https://schema.org/docs/full.html) to expand `CreativeWork` and find the type `Dataset` (other common types may be `ScholarlyArticle`, `ImageObject`, `SoftwareSourceCode`)
+
+<img src="./icons/code-compare.svg" width="16" height="16" alt="Task:" />  To specify `Dataset` as a type, use:
+
+```html
+<link href="https://schema.org/Dataset" rel="type" />
+```
+
+**Note**: This schema.org identifier is subtly different from the JSON-LD usage in Bioschemas, which `@context` maps `Dataset` to `http://schema.org/Dataset` etc. As Signposting is navigational and not semantic, we here prefer the `https://` variant.
+
+Now, the resource we are providing the signposting from is not technically speaking the dataset, but a landing page _about_ the downloadable dataset. Therefore Signposting recommends also adding:
+
+```html
+<link href="https://schema.org/AboutPage" rel="type" />    
+```
+
+This may be a good time to [try it out](#try-it-out) using a signposting clients to verify your changes to `index.html`.
+
+
+### Specifying authors
+
 
 
 
@@ -223,6 +249,10 @@ If you manage a repository, you likely already assign persistent identifiers tha
 ## Try it out
 
 In order to try out Signposting we will try two alternative Signposting clients. 
+
+<img src="./icons/code-compare.svg" width="16" height="16" alt="Task:" /> Ensure you have **committed** and **pushed** your code to Github, allowing the page to rebuild. Visit the **Actions** tab in the GitHub repository to ensure the build succeeded as before.
+
+After visiting **your** page, e.g. `https://USER.github.io/signposting-tutorial/7338056/` , you may use **Inspect Element** in the Browser to check the `<link>` headers have been added correctly -- however your browser will by default not do any further validation.
 
 ### Command line / Python
 
@@ -282,11 +312,9 @@ alt text
 
 An experimental browser plugin for the [Chrome browser](https://www.google.com/intl/en_uk/chrome/) (and its derivatives Chromium, Edge etc.) is available as [Signposting Sniffing](https://chromewebstore.google.com/detail/signposting-sniffing/pahanegeimljfcnjogglnamnlcgipmbc). Click **Add to Chrome** to enable this plugin. Note that although the plugin has access to inspect every web page, it should not be doing any external requests.
 
-When Signposting is detected in a page, it will be presented as an overlay. Ensure you have **committed** and **pushed** your code to Github, allowing the page to rebuild, before trying the plugin:
+When Signposting is detected in a page, it will be presented as an overlay. After installing the plugin again, re-visit your dataset page in that browser. 
 
 ![Screenshot of Chrome browser with Signposting Sniffing plugin, showing detected signposting](images/signposting-chrome.png "Signposting Sniffing Chrome plugin")
-
-
 
 
 
