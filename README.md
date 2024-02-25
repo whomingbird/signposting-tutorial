@@ -1,42 +1,44 @@
 # signposting-tutorial
 
 ## Overview
-* __Name:__ Tutorial on adding Signposting to GitHub pages
+* __Name:__ Tutorial on adding Signposting to HTML in Web pages
 * __Description:__ This tutorial shows how to add Signposting to GitHub pages. It uses a simple GitHub page hosted in the `docs/` folder to create a sample project page, i.e., as learners could do with their own GitHub projects. As an example, it uses the dataset corresponding to the released project [TREC-doc-2-doc-relevance](https://github.com/zbmed-semtec/TREC-doc-2-doc-relevance), a web-based interface to add document-to-document relevance assessments to pairs of documents retrieved from [TREC 2005 Genomics Track](https://trec.nist.gov/data/genomics/05/genomics.qrels.large.txt). 
 * __Keywords:__ Signposting, GitHub pages
 
 <img src="./icons/question.svg" width="16" height="16"/> __Questions__
 * How can I add Signposting to GitHub pages?
 * How can I include external metadata in my signposting?
-* How
+* How do I decide which metadata to include in signposting?
 
 <img src="./icons/bullseye.svg" width="16" height="16"/> __Learning outcomes__
 * Describe how Signposting can be embedded in GitHub pages
 * Understanding of Signposting limitation of static content-delivery networks
-* Use schema and Bioschemas validators
+* Knowledge of different metadata formats and their signposting profiles
+ 
 
 <img src="./icons/circle-check.svg" width="16" height="16"/> __Requirements__
 * Brief understanding of Signposting
 * Familiarity on how to use GitHub 
 * Basic knowledge on how to use GitHub pages. More information at [GitHub Pages](https://pages.github.com/)
 * Familiarity with HTML
-* Knowledge of develop tools on a browser
+* Knowledge of developer tools on a browser
 
 <img src="./icons/hourglass-half.svg" width="16" height="16"/> __Time estimation__ 30 minutes
 
 <img src="./icons/graduation-cap.svg" width="16" height="16"/> __Level__ Beginner / Introductory
 
-<img src="./icons/calendar.svg" width="16" height="16"/> __Published__ 2024-02-07
+<img src="./icons/calendar.svg" width="16" height="16"/> __Published__ 2024-02-25
 
-<img src="./icons/pen-to-square.svg" width="16" height="16"/> __Latest modification__ 2024-02-07
+<img src="./icons/pen-to-square.svg" width="16" height="16"/> __Latest modification__ 2024-02-25
 
 <img src="./icons/scale-balance.svg" width="16" height="16"/> __License__ [CC-By 4.0](https://spdx.org/licenses/CC-BY-4.0)
 
-<img src="./icons/code-compare.svg" width="16" height="16"/> __Version__ 1.0.0
+<img src="./icons/code-compare.svg" width="16" height="16"/> __Version__ 0.1.0
 
-<img src="./icons/fingerprint.svg" width="16" height="16"/> __Identifier__ [DOI:10.5281/zenodo.10629453](https://doi.org/10.5281/zenodo.10629453)
+<!--<img src="./icons/fingerprint.svg" width="16" height="16"/> __Identifier__ [DOI:10.5281/zenodo.10629453](https://doi.org/10.5281/zenodo.10629453)
 
 <img src="./icons/crosshairs.svg" width="16" height="16"/> __Citation__ Castro, LJ. (2024, February 7). Adding Bioschemas Dataset and ComputationalTool markup to GitHub pages. Zenodo. https://doi.org/10.5281/zenodo.10629453
+-->
 
 ## Learning experience
 
@@ -48,8 +50,9 @@ In this tutorial we will cover:
     - [Agenda](#agenda)
     - [Prerequisites](#prerequisites)
     - [Creating this GitHub Page](#creating-this-github-page)
-    - [Overview of the data](#overview-of-the-data)
-    - [Adding Signposting markup](#adding-signposting-markup)
+    - [Overview of the repository](#overview-of-the-repository)
+    - [Challenge of machine actionability](#challenge-of-machine-actionability)
+    - [Adding FAIR Signposting](#adding-fair-signposting)
     - [Try it out](#try-it-out)
   - [What is next?](#what-is-next)
   - [Acknowledgements](#acknowledgements)
@@ -76,11 +79,28 @@ In a matter of minutes, your site will be live. The pages corresponding to the e
 
 Do not forget to check out a local copy of your fork so you can make changes -- alternatively you may use the GitHub editor.
 
-### Overview of the data
+### Overview of the repository
+
+This repository is emulating a basic HTML-based institutional repository, with a single dataset entry corresponding to Zenodo's entry:
+
+* [docs/](docs/) The Web root, as deployed above. Note that your deployment will use a hostname similar to `stain.github.io` but reflecting your username.
+  - [docs/7338056/](docs/7338056/) A single dataset, based on a <a href="https://doi.org/10.5281/zenodo.7338056">real Zenodo entry</a>
+    + [docs/7338056/index.html](docs/7338056/index.html) HTML for the dataset 7338056, at start of tutorial _without any signposting_
+    + [docs/7338056/solution.html](docs/7338056/solution.html) Modified `index.html` after following this tutorial. Do not peek here until you have done the exercises!
+    + [docs/7338056/bioschemas.jsonld](docs/7338056/bioschemas.jsonld) Bioschemas JSON-LD metadata as in the tutorial [bioschemas-ghpages-markup-tutorial](https://github.com/zbmed-semtec/bioschemas-ghpages-markup-tutorial), but extracted from `<script>` tag 
+
+The remaining dataset and metadata downloads are in this case shown as deeplinks to Zenodo to indicate that Signposting is not tied to a particular domain.
+
+Signposting is added at HTTP or HTML-level, and this tutorial is deployed using [GitHub Pages](https://pages.github.com/). For simplicity it uses static HTML files based on a [Bootstrap v5 starter template](https://getbootstrap.com/docs/5.0/getting-started/introduction) -- applying Signposting to a real repository deployment may require editing of its HTML templates, which is currently out of scope for this tutorial.
 
 
+### Challenge of machine actionability
 
-### Adding Signposting markup
+While the HTML page [docs/7338056/index.html](docs/7338056/index.html) is 
+
+
+### Adding FAIR Signposting
+
 
 
 
