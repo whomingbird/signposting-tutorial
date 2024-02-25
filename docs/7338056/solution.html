@@ -40,6 +40,13 @@
 
     <!-- Metadata resources -->
     <link
+        href="bioschemas.jsonld" 
+        rel="describedby"
+        type="application/ld+json"
+        profile="https://bioschemas.org/profiles/Dataset/1.1-DRAFT"
+    />    
+    <!-- Specify profile=".." if known, specially if multiple metadata have same type=".." -->
+    <link
         href="https://zenodo.org/records/7338056/export/json-ld" 
         rel="describedby" 
         type="application/ld+json"
@@ -60,13 +67,7 @@
         type="application/xml"
         profile="http://purl.org/dc/elements/1.1/"/>
     
-    <!-- Specify profile=".." if known, specially if multiple metadata have same type=".." -->
-    <link
-        href="bioschemas.jsonld" 
-        rel="describedby"
-        type="application/ld+json"
-        profile="https://bioschemas.org/profiles/Dataset/1.1-DRAFT"
-    />
+
 
     <!-- Link to the collection(s) which have this resource as an item -->
     <link

@@ -58,9 +58,12 @@ In this tutorial we will cover:
       - [Using a w3id persistent identifier](#using-a-w3id-persistent-identifier)
     - [Specifying authors](#specifying-authors)
     - [Specifying license](#specifying-license)
-    - [Specifying downloads](#specifying-downloads)
-    - [Listing metadata](#listing-metadata)
+    - [Specifying content downloads](#specifying-content-downloads)
+    - [Listing metadata resources](#listing-metadata-resources)
       - [Specifying metadata format and profiles](#specifying-metadata-format-and-profiles)
+    - [Linking back to the collection](#linking-back-to-the-collection)
+    - [Repository listing](#repository-listing)
+    - [Linksets](#linksets)
   - [Try it out](#try-it-out)
     - [Command line / Python](#command-line--python)
     - [Signposting in browser](#signposting-in-browser)
@@ -273,7 +276,7 @@ In other cases there is no single license, or the license is only embedded withi
 **Tip**: Make sure you use the US spelling of the link relation `license`!
 
 
-### Specifying downloads
+### Specifying content downloads
 
 Returning to the FAIR Principles we also find:
 
@@ -311,7 +314,7 @@ It is possible to have additional downloads. For instance, Zenodo entries can ha
 **Note**: There is no indication in the outgoing links that these are alternatives of the same resource (the underlying table). This could have to be done using `rel=alternate` at a HTTP header level for each of the files, however this kind of semantics is not required by Signposting. Likewise, provenance history of a conversion taking place would be the role of metadata to cover.
 
 
-### Listing metadata
+### Listing metadata resources
 
 A very important motivation for FAIR Signposting is to make machine-readable metadata easier to find. In particular, clients should not need to _content-negotiate_ or know in advance exactly which format are available. In some cases metadata is also available externally, which is examplified by this repository, which links back to Zenodo. 
 
@@ -324,20 +327,145 @@ In Signposting, metadata resources are listed as `describedby`. Metadata is cons
 ```html
 <link
     href="https://zenodo.org/records/7338056/export/json-ld" 
-    rel="describedby" 
-/>
+    rel="describedby" />
 ```
-
-#### Specifying metadata format and profiles
-
-
-
-
-
 
 <img src="./icons/citation.svg" width="16" height="16" alt="Literature:" />  For further reading, see:
  
 * [Report on FAIR Signposting and its Uptake by the Community](https://doi.org/10.5281/zenodo.10490289)
+
+
+#### Specifying metadata format and profiles
+
+Signposting recommends [attributes for typed links](https://signposting.org/conventions/#attributes), which are particularly important for metadata, which is available in many different formats.
+
+
+
+<img src="./icons/citation.svg" width="16" height="16" alt="Literature:" />  The [Bibliographic Metadata Formats](https://signposting.org/conventions/#bibliographic) listed for Signposting and the [FAIR Signposting level 1](https://signposting.org/FAIR/#level1) entry for `describedby` lists common media types like `application/vnd.datacite.datacite+xml`
+
+<img src="./icons/pen-to-square.svg" width="16" height="16" alt="Task:" /> Augment the list of metadata resource to list the specific media types, e.g.:
+
+```html
+<link 
+    href="https://zenodo.org/records/7338056/export/bibtex"
+    rel="describedby"
+    type="application/x-bibtex"
+  />
+```
+
+Finally, some metadata use generic formats, like `application/xml` (XML) or `application/ld+json`  (JSON-LD) -- the client will need to know particular namespaces or vocabularies to understand them. There may also be multiple metadata resources using the same format, but different models or variants.  The concept of `profile` is intended for such disambiguating, and this is specified as an attribute of the link relation. The profile is identified by an URI.
+
+<img src="./icons/pen-to-square.svg" width="16" height="16" alt="Task:" />  To distinguish the two JSON-LD formats in this example, add their specific `profile`:
+
+```html
+<link
+    href="https://zenodo.org/records/7338056/export/json-ld" 
+    rel="describedby" 
+    type="application/ld+json"
+    profile="http://schema.org/"/>
+<link
+    href="bioschemas.jsonld" 
+    rel="describedby"
+    type="application/ld+json"
+    profile="https://bioschemas.org/profiles/Dataset/1.1-DRAFT"
+/>         
+```
+
+<img src="./icons/pen-to-square.svg" width="16" height="16" alt="Task:" />  For the Dublin Core export, add `profile="http://purl.org/dc/elements/1.1/"` as suggested by the [Bibliographic Metadata Formats](https://signposting.org/conventions/#bibliographic) table:
+
+```html
+<link 
+    href="https://zenodo.org/records/7338056/export/dublincore" 
+    rel="describedby" 
+    type="application/xml"
+    profile="http://purl.org/dc/elements/1.1/"/>
+```
+
+
+### Linking back to the collection
+
+While not required, it is good practice to link to the collection(s) the resource is from. In this case we don't have a persistent identifier for the collection.
+
+<img src="./icons/pen-to-square.svg" width="16" height="16" alt="Task:" />  Add the parent using `collection` link relation:
+
+```html
+<link
+    href="/signposting-tutorial/"
+    rel="collection">
+```
+
+
+### Repository listing 
+
+Finally, now let's consider the [root index.html](docs/index.html). The listing of datasets is not machine-readable. 
+
+A corresponding PID <https://w3id.org/signposting-tutorial/USER> should redirect to your dataset listing.
+
+<img src="./icons/pen-to-square.svg" width="16" height="16" alt="Task:" />   Modify `docs/index.html` to add `cite-as` to reflect this persistent identifier:
+
+```html
+<link
+  href="https://w3id.org/signposting-tutorial/stain" 
+  rel="cite-as" />
+```
+
+To indicate that this is a listing of datasets, use a type like <https://schema.org/DataCatalog> (for `Dataset` items), or <https://schema.org/Collection> (for any other types of items). 
+
+<img src="./icons/pen-to-square.svg" width="16" height="16" alt="Task:" />   Modify `docs/index.html` to add a `type`:
+
+**Note:** We don't include `AboutPage` here, because the HTML listing _is_ the collection. 
+
+<img src="./icons/pen-to-square.svg" width="16" height="16" alt="Task:" />  Add the dataset using the link relation `item`, but specify the `type` as `text/html` (items are landing pages):
+
+```html
+<link href="7338056/" 
+  rel="item" 
+  type="text/html" />          
+```
+
+### Linksets
+
+For repositories there is likely to be very many entries. It is therefore NOT RECOMMENDED to list them in the HTTP headers, and they should not be listed in the HTML.
+
+<img src="./icons/pen-to-square.svg" width="16" height="16" alt="Task:" />   Remove the `item` from before, and replace it with a `linkset` indirection:
+
+```html
+<link href="linkset.json" 
+  rel="linkset" 
+  type="application/linkset+json" />
+```
+
+A linkset is a mechanism to move links to a separate document . The document uses `anchor` to refer to which outgoing document the links are for, therefore a linkset can be common for multiple resources, which each link to it using `linkset`.
+
+
+<img src="./icons/citation.svg" width="16" height="16" alt="Task:" />  Inspect the [docs/linkset.json](docs/linkset.json) for an example linkset in JSON.
+
+<img src="./icons/pen-to-square.svg" width="16" height="16" alt="Task:" />   Augment the `linkset.json` file to include `"type": "text/html"` for the dataset 7338056. Remember to use correct `,` placement when editing the JSON.
+
+
+```json
+{
+    "linkset": [
+      {
+        "anchor": "https://stain.github.io/signposting-tutorial/",
+        "cite-as": [
+          {
+            "href": "https://w3id.org/signposting-tutorial/stain"
+          }
+        ],        
+        "item": [
+          {
+            "href": "https://stain.github.io/signposting-tutorial/7338056/",
+            "type": "text/html"
+          }
+        ]
+      }
+    ]
+  }
+```
+
+
+<img src="./icons/citation.svg" width="16" height="16" alt="Literature:" /> [RFC9264](https://www.rfc-editor.org/rfc/rfc9264.html) specifies the `application/linkset+json` format, along with a text-based alternative `application/linkset` 
 
 
 ## Try it out
