@@ -17,9 +17,9 @@
  
 
 <img src="./icons/circle-check.svg" width="16" height="16"/> __Requirements__
-* Brief understanding of Signposting
-* Familiarity on how to use GitHub 
-* Basic knowledge on how to use GitHub pages. More information at [GitHub Pages](https://pages.github.com/)
+* Familiarity on how to use [GitHub](https://docs.github.com/en/get-started/start-your-journey) 
+* Basic knowledge on how to use [GitHub Pages](https://pages.github.com/)
+* Brief understanding of Signposting (introduction slides)
 * Familiarity with HTML
 * Knowledge of developer tools on a browser
 
@@ -53,29 +53,35 @@ In this tutorial we will cover:
     - [Overview of the repository](#overview-of-the-repository)
     - [Challenge of machine actionability](#challenge-of-machine-actionability)
     - [Adding FAIR Signposting](#adding-fair-signposting)
-    - [Try it out](#try-it-out)
-  - [What is next?](#what-is-next)
+    - [Where to add Signposting?](#where-to-add-signposting)
+    - [Adding a persistent identifier](#adding-a-persistent-identifier)
+      - [Using a w3id persistent identifier](#using-a-w3id-persistent-identifier)
+    - [Specify the type](#specify-the-type)
+  - [Try it out](#try-it-out)
+    - [Command line / Python](#command-line--python)
+    - [Signposting in browser](#signposting-in-browser)
   - [Acknowledgements](#acknowledgements)
 
 ### Prerequisites
 
 To follow this tutorial, you should already have experience with using GitHub, and be signed in to your GitHub account. See [Learn the basics of GitHub](https://docs.github.com/en/get-started/start-your-journey) as a refresher.
 
+
 ### Creating this GitHub Page
 
-Let's start by forking [this repository](https://github.com/stain/signposting-tutorial) for your own purposes. Once forked, go to **Settings**
+<img src="./icons/code-compare.svg" width="16" height="16" alt="Task:" /> Let's start by forking [this repository](https://github.com/stain/signposting-tutorial) for your own purposes. Once forked, go to **Settings**
 
-![Screenshot of GitHub, highlighting the Settings link](./images/settings.png "GitHub Settings button")
+![Screenshot of GitHub, highlighting the Settings link](images/settings.png "GitHub Settings button")
 
-You will need to enable _Pages_ on your forked repository, and select **Deploy from a branch** using  **Branch:** `main`  and **Folder**: `docs/`. Then **Save** the changes. 
+<img src="./icons/crosshairs.svg" width="16" height="16" alt="Task:" />  You will need to enable _Pages_ on your forked repository, and select **Deploy from a branch** using  **Branch:** `main`  and **Folder**: `docs/`. Then **Save** the changes. 
 
 As this repo does have a gh-pages branch, it will use it. If such branch would not exist, GitHub would ask you to use the main branch to start the gh-pages one
 
-![Screenshot of GitHub Pages setting](./images/pages.png "GitHub Pages")
+![Screenshot of GitHub Pages setting](images/pages.png "GitHub Pages")
 
 In a matter of minutes, your site will be live. The pages corresponding to the examples used in this tutorial are available at [https://stain.github.io/signposting-tutorial/](https://stain.github.io/signposting-tutorial/)
 
-![Screenshot: Your pages are live](./images/pages-published.png "GitHub Pages published")
+![Screenshot: Your pages are live](images/pages-published.png "GitHub Pages published")
 
 Do not forget to check out a local copy of your fork so you can make changes -- alternatively you may use the GitHub editor.
 
@@ -99,7 +105,7 @@ Signposting is added at HTTP or HTML-level, and this tutorial is deployed using 
 Look at HTML page <https://stain.github.io/signposting-tutorial/7338056/> and open the HTML code in [docs/7338056/index.html](docs/7338056/index.html). 
 This is a somewhat typical _landing page_ for a Web-based data repository. We will imagine that the persistent identifier (DOI) has redirected to this page, as is the case for the original <https://doi.org/10.5281/zenodo.7338056>
 
-![Screenshot of landing page, showing metadata, download links etc](./images/landing-page.png "HTML landing page")
+![Screenshot of landing page, showing metadata, download links etc](images/landing-page.png "HTML landing page")
 
 We see that the landing page is quite useful for humans, including an abstract, metadata including title, author, keywords, and a big download button. There are some export formats listed at the end for formats like Bibtex.
 
@@ -117,13 +123,171 @@ The goal of [Signposting](https://signposting.org/) is to reduce the heuristics 
 
 ### Adding FAIR Signposting
 
+In this tutorial we will implement [FAIR Signposting](https://signposting.org/FAIR/) at [level 1](https://signposting.org/FAIR/#level1), which provides:
+
+* Author(s)
+* Persistent identifiers
+* Metadata
+* Download/archive
+* License
+* Type
+
+![A landing page points out using link relations cite-as, author, item, type, describedby](images/level1.png "FAIR Signposting level 1")
 
 
-### Try it out
+### Where to add Signposting?
+
+Signposting can be added in three ways:
+
+1. In the HTTP `GET` / `HEAD` response, using `Link` header
+2. In a HTML landing page, within the HTML `<head>` section using `<link>` element
+3. In a dedicated linkset JSON or text file, linked to using any of the above
+
+As this tutorial is neutral to deployment, and GitHub Pages do not permit control over HTTP headers, we will primarily work with option 2.
+
+* <img src="./icons/pen-to-square.svg" width="16" height="16" alt="Task:" />  To add the HTML links _to your forked repository_, now open [docs/7338056/index.html](docs/7338056/index.html) and click either _Edit in place_ button or the more powerful _Open with github.dev_.
+
+![Screenshot: Edit file: Edit in place. Open with... github.dev](images/edit-icons.png "GitHub Edit options")
+
+If you don't see these options, make sure you are on your fork of the repository. 
+
+Towards the top of the file, you will find two tags we will expand:
+
+![Screenshot from code editor, showing HTML tags](images/code-editor.png "github.dev showing HTML")
+
+
+```html
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"  
+        rel="stylesheet" integrity="sha384-EVSTQN3/..." crossorigin="anonymous">
+
+    <!-- Copy and modify below line to add Signposting -->    
+    <link href="" rel="self" />
+```
+
+The first line shows how we are using the existing HTML mechanism for linking, `rel=stylesheet` tells the browser how to add the styling using the linked Bootstrap theme.
+
+The second line is a template which we'll copy and modify in the instructions below. In the end you may delete this example line, as `rel=self` is not needed in HTML documents.
+
+Make sure you add the new links within the `<head> .... </head>` section, as recommended by FAIR Signposting.  To simplify life for clients, it is NOT RECOMMENDED to add `<link>` to the `<body>` content.
+
+
+### Adding a persistent identifier
+
+The [FAIR Guiding Principles](https://doi.org/10.1038/sdata.2016.18) include:
+
+> F1. (meta)data are assigned a globally unique and persistent identifier  
+> ...  
+> F3. metadata clearly and explicitly include the identifier of the data it describes  
+> ...  
+> A1. (meta)data are retrievable by their identifier using a standardized communications protocol
+
+Persistent identifiers as expressed in Signposting using `rel="cite-as"` ([RFC8574](https://www.iana.org/go/rfc8574)) -- this allows a landing page to say which persistent identifier will redirect to the page.
+
+The original entry for this dataset has a DOI `10.5281/zenodo.7338056` -- however DOIs as untyped strings are not a good targets, as every Signposting has to be a valid [URI](https://en.wikipedia.org/wiki/Uniform_Resource_Identifier) -- typically starting with `http://` or `https://` followed by a domain name for the corresponding Web server. For DOIs we will therefore use the `https://doi.org/` _resolver_ -- to convert the DOI to a URI, simply add this as a prefix to become: <https://doi.org/10.5281/zenodo.7338056>
+
+* <img src="./icons/pen-to-square.svg" width="16" height="16" alt="Task" /> Modify docs/7338056/index.html so that it includes the signposting for the DOI `10.5281/zenodo.7338056`:
+
+```html
+    <link href="https://doi.org/10.5281/zenodo.7338056" rel="cite-as" />
+```
+
+#### Using a w3id persistent identifier
+
+Note however that the purpose of `cite-as` is not to give any odd scholarly citation, but a persistent identifier that _leads back to this place_.  In this idealized example we have duplicated a Zenodo entry, however their DOI <https://doi.org/10.5281/zenodo.7338056> of course will still redirect to their landing page <https://zenodo.org/records/7338056> and we are not at power to modify their HTML template.
+alt text
+    https://w3id.org/signposting-tutorial/{user}.{number}
+
+Modify the below signposting to reflect your username, and use this instead as a `cite-as`:
+
+```html
+    <link href="https://w3id.org/signposting-tutorial/stain.7338056" rel="cite-as" />
+```
+
+Note that from the [FAIR Signposting level 1](https://signposting.org/FAIR/#level1) profile there should be only one `cite-as`, so delete the doi.org version.
+
+If you manage a repository, you likely already assign persistent identifiers that can be used with `cite-as` -- if not, consider these resources:
+
+* [Identifiers for the 21st century](https://doi.org/10.1371/journal.pbio.2001414): How to design, provision, and reuse persistent identifiers to maximize utility and impact of life science data
+* [DataCite: Create DOIs](https://datacite.org/create-dois/)
+* [w3id](https://w3id.org/): Permanent identifiers for the Web
+* [b2handle](https://www.eudat.eu/services/userdoc/b2handle)
+
+
+### Specify the type
 
 
 
-## What is next?
+
+
+## Try it out
+
+In order to try out Signposting we will try two alternative Signposting clients. 
+
+### Command line / Python
+
+If you are comfortable using the command line, and have [Python](https://www.python.org/) 3.7 or later installed, then install the [signposting](https://pypi.org/project/signposting/) Python package:
+
+```shell
+pip install signposting
+```
+
+Verify the tool is installed on the `PATH`:
+
+```shell
+(base) stain@xena:~/src/signposting-tutorial$ signposting --help
+usage: signposting [-h] [--http] [--html] [--linkset] [-D] [-c] url [url ...]
+
+positional arguments:
+  url                URL(s) to discover signposting for
+
+optional arguments:
+  -h, --help         show this help message and exit
+  --http             Find signposting in HTTP Link headers
+  --html             Find signposting in <link> HTML elements if media-type matches
+  --linkset          Find signposting in RFC9264 JSON or text linksets if media-type matches. When used with --recurse without specifying --http or --html, use those signposts to recurse, but
+                     only report from linksets
+  -D, --distinct     Report each signposting method (--http, --html and --linkset) separately
+  -c, --any-context  Include signposts any contexts/anchors, not just resolved URI
+```
+
+Now try it on your GitHub deployment:
+
+```shell
+(base) stain@xena:~/src/signposting-tutorial$ signposting https://stain.github.io/signposting-tutorial/7338056/
+Signposting for https://stain.github.io/signposting-tutorial/7338056/ 
+CiteAs: <https://doi.org/10.5281/zenodo.7338056>
+Type: <https://schema.org/AboutPage>
+      <https://schema.org/Dataset>
+Collection: <https://stain.github.io/signposting-tutorial/>
+License: <https://spdx.org/licenses/CC-BY-4.0>
+Author: <https://orcid.org/0000-0003-2978-8922>
+        <https://orcid.org/0009-0004-1529-0095>
+        <https://orcid.org/0000-0003-3986-0510>
+        <https://orcid.org/0000-0002-1018-0370>
+DescribedBy: <https://stain.github.io/signposting-tutorial/7338056/bioschemas.jsonld> application/ld+json
+             <https://zenodo.org/records/7338056/export/dublincore> application/xml
+             <https://zenodo.org/records/7338056/export/bibtex> application/x-bibtex
+             <https://zenodo.org/records/7338056/export/json-ld> application/ld+json
+             <https://zenodo.org/records/7338056/export/datacite-xml> application/vnd.datacite.datacite+xml
+Item: <https://zenodo.org/records/7338056/files/Fleiss%20Kappa%20for%20document-to-document%20relevant%20assessment.csv?download=1> text/csv
+```
+
+If you have made a mistake, this library is likely to skip the particular signposting, or give a warning.
+
+The Sigposting Python library can also be [used programmatically](https://signposting.readthedocs.io/) from other Python programs. See [Signposting adopters](https://signposting.org/adopters/) for a complete list of software and repositories working with Signposting.
+alt text
+
+### Signposting in browser
+
+An experimental browser plugin for the [Chrome browser](https://www.google.com/intl/en_uk/chrome/) (and its derivatives Chromium, Edge etc.) is available as [Signposting Sniffing](https://chromewebstore.google.com/detail/signposting-sniffing/pahanegeimljfcnjogglnamnlcgipmbc). Click **Add to Chrome** to enable this plugin. Note that although the plugin has access to inspect every web page, it should not be doing any external requests.
+
+When Signposting is detected in a page, it will be presented as an overlay. Ensure you have **committed** and **pushed** your code to Github, allowing the page to rebuild, before trying the plugin:
+
+![Screenshot of Chrome browser with Signposting Sniffing plugin, showing detected signposting](images/signposting-chrome.png "Signposting Sniffing Chrome plugin")
+
+
+
 
 
 ## Acknowledgements
