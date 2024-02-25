@@ -60,6 +60,7 @@ In this tutorial we will cover:
     - [Specifying license](#specifying-license)
     - [Specifying downloads](#specifying-downloads)
     - [Listing metadata](#listing-metadata)
+      - [Specifying metadata format and profiles](#specifying-metadata-format-and-profiles)
   - [Try it out](#try-it-out)
     - [Command line / Python](#command-line--python)
     - [Signposting in browser](#signposting-in-browser)
@@ -298,7 +299,7 @@ Note that although `type` is optional, it is strongly recommended for downloads,
 
 It is possible to have additional downloads. For instance, Zenodo entries can have multiple uploads for a single DOI/landing page. In this tutorial repository, we have included the [fleiss.tsv](docs/7338056/fleiss.tsv) as an example of an additional resource, converted from the CSV to the Tabular Separated Values format .
 
-Add another download for our converted TSV file:
+<img src="./icons/pen-to-square.svg" width="16" height="16" alt="Task:" />   Add another download for our converted TSV file:
 
 ```html
 <link 
@@ -307,11 +308,36 @@ Add another download for our converted TSV file:
     type="text/tab-separated-values" />
 ```
 
-**Note**: There is no indication in the outgoing links that these are alternatives of the same resource (the table). This could have to be done using `rel=alternate` at a HTTP header level for each of the files, however this is not required by Signposting. Likewise, provenance history of a conversion taking place would be the role of metadata to cover.
+**Note**: There is no indication in the outgoing links that these are alternatives of the same resource (the underlying table). This could have to be done using `rel=alternate` at a HTTP header level for each of the files, however this kind of semantics is not required by Signposting. Likewise, provenance history of a conversion taking place would be the role of metadata to cover.
 
 
 ### Listing metadata
 
+A very important motivation for FAIR Signposting is to make machine-readable metadata easier to find. In particular, clients should not need to _content-negotiate_ or know in advance exactly which format are available. In some cases metadata is also available externally, which is examplified by this repository, which links back to Zenodo. 
+
+In Signposting, metadata resources are listed as `describedby`. Metadata is considered separated from the data (the `item` downloads) if they can be considered to primarily be describing the data. 
+
+**Note**: A dataset may just happen to be written in a semantic format like JSON-LD (e.g. the dataset is an ontology), in which case it should still be listed under `item`, not as `describedby`. 
+
+<img src="./icons/pen-to-square.svg" width="16" height="16" alt="Task:" />  Add a link relation for each of the metadata formats linked from the HTML, e.g.
+
+```html
+<link
+    href="https://zenodo.org/records/7338056/export/json-ld" 
+    rel="describedby" 
+/>
+```
+
+#### Specifying metadata format and profiles
+
+
+
+
+
+
+<img src="./icons/citation.svg" width="16" height="16" alt="Literature:" />  For further reading, see:
+ 
+* [Report on FAIR Signposting and its Uptake by the Community](https://doi.org/10.5281/zenodo.10490289)
 
 
 ## Try it out
