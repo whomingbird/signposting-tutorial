@@ -65,17 +65,17 @@ To follow this tutorial, you should already have experience with using GitHub, a
 
 Let's start by forking [this repository](https://github.com/stain/signposting-tutorial) for your own purposes. Once forked, go to **Settings**
 
-![Settings](./images/settings.png)
+![Screenshot of GitHub, highlighting the Settings link](./images/settings.png "GitHub Settings button")
 
 You will need to enable _Pages_ on your forked repository, and select **Deploy from a branch** using  **Branch:** `main`  and **Folder**: `docs/`. Then **Save** the changes. 
 
 As this repo does have a gh-pages branch, it will use it. If such branch would not exist, GitHub would ask you to use the main branch to start the gh-pages one
 
-![GitHub Pages](./images/pages.png)
+![Screenshot of GitHub Pages setting](./images/pages.png "GitHub Pages")
 
 In a matter of minutes, your site will be live. The pages corresponding to the examples used in this tutorial are available at [https://stain.github.io/signposting-tutorial/](https://stain.github.io/signposting-tutorial/)
 
-![Published pages](./images/pages-published.png)
+![Screenshot: Your pages are live](./images/pages-published.png "GitHub Pages published")
 
 Do not forget to check out a local copy of your fork so you can make changes -- alternatively you may use the GitHub editor.
 
@@ -96,11 +96,26 @@ Signposting is added at HTTP or HTML-level, and this tutorial is deployed using 
 
 ### Challenge of machine actionability
 
-While the HTML page [docs/7338056/index.html](docs/7338056/index.html) is 
+Look at HTML page <https://stain.github.io/signposting-tutorial/7338056/> and open the HTML code in [docs/7338056/index.html](docs/7338056/index.html). 
+This is a somewhat typical _landing page_ for a Web-based data repository. We will imagine that the persistent identifier (DOI) has redirected to this page, as is the case for the original <https://doi.org/10.5281/zenodo.7338056>
 
+![Screenshot of landing page, showing metadata, download links etc](./images/landing-page.png "HTML landing page")
+
+We see that the landing page is quite useful for humans, including an abstract, metadata including title, author, keywords, and a big download button. There are some export formats listed at the end for formats like Bibtex.
+
+The tutorial [bioschemas-ghpages-markup-tutorial](https://github.com/zbmed-semtec/bioschemas-ghpages-markup-tutorial) highlights how this kind of metadata can be made machine-readable in a FAIR format -- which for completeness is included in the `<script>` tag at the end of the HTML. This however just one of the many ways that FAIR metadata can be provided, and many repositories (as shown in this example).
+
+However, a machine (example: pre-programmed script) who accesses the given persistent identifier, and do not already know this particular repository implementation or Bioschemas, is not immediately able to answer the most basic FAIR questions:
+
+* What is the persistent identifier?
+* What is the type of the resource described?
+* Where can it download the data (if any), and in which format(s)?
+* What is the license and authorship of the data?
+* What other metadata formats are available? What conventions do they follow?
+
+The goal of [Signposting](https://signposting.org/) is to reduce the heuristics that would otherwise be needed by such clients (e.g. text mining or content-negotiation), to give explicit typed links to facilitate _navigation_. Note that this is different from _semantics_, as the main goal is to give the client further waypoints rather than meaning.
 
 ### Adding FAIR Signposting
-
 
 
 
