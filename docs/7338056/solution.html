@@ -4,38 +4,41 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Bootstrap CSS -->
+    <!-- Bootstrap CSS, rel="stylesheet" is not part of signposting  -->
     <link
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
         rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
 
-    <link href="https://doi.org/10.5281/zenodo.7338056" rel="cite-as" />
-    
-    <link href="https://spdx.org/licenses/CC-BY-4.0" rel="license" />
+<!-- Signposting examples follows -->
 
+    <!-- Persistent identifier -->
+    <link href="https://doi.org/10.5281/zenodo.7338056" rel="cite-as" />
+       
+    <!-- Type of downloadable resource AND the landing page -->
     <link href="https://schema.org/Dataset" rel="type" />
     <link href="https://schema.org/AboutPage" rel="type" />
-    
+
+    <!-- Persistent identifiers of authors, if known -->
     <link href="https://orcid.org/0000-0003-2978-8922" rel="author" />
     <link href="https://orcid.org/0009-0004-1529-0095" rel="author" />
     <link href="https://orcid.org/0000-0002-1018-0370" rel="author" />
     <link href="https://orcid.org/0000-0003-3986-0510" rel="author" />
+    
+    <!-- Persistent identifier of license, if known -->
+    <link href="https://spdx.org/licenses/CC-BY-4.0" rel="license" />
 
+    <!-- Downloadable item(s), e.g. csv, pdf, zip. May be external/CDN, but is not a PID. -->
     <link 
         href="https://zenodo.org/records/7338056/files/Fleiss%20Kappa%20for%20document-to-document%20relevant%20assessment.csv?download=1"
         rel="item"
         type="text/csv" />
+    <link 
+        href="fleiss.tsv"
+        rel="item"
+        type="text/tab-separated-values" />
 
-    <link
-        href="/signposting-tutorial/"
-        rel="collection">
 
-    <link
-        href="bioschemas.jsonld" 
-        rel="describedby"
-        type="application/ld+json"
-        profile="https://bioschemas.org/profiles/Dataset/1.1-DRAFT"
-    />
+    <!-- Metadata resources -->
     <link
         href="https://zenodo.org/records/7338056/export/json-ld" 
         rel="describedby" 
@@ -56,11 +59,25 @@
         rel="describedby" 
         type="application/xml"
         profile="http://purl.org/dc/elements/1.1/"/>
-
-    <!--
-        <link href=".." rel=".." />
-    -->
     
+    <!-- Specify profile=".." if known, specially if multiple metadata have same type=".." -->
+    <link
+        href="bioschemas.jsonld" 
+        rel="describedby"
+        type="application/ld+json"
+        profile="https://bioschemas.org/profiles/Dataset/1.1-DRAFT"
+    />
+
+    <!-- Link to the collection(s) which have this resource as an item -->
+    <link
+        href="/signposting-tutorial/"
+        rel="collection">
+
+<!-- 
+    End of Signposting, see other registered link relation types at
+    https://www.iana.org/assignments/link-relations/
+-->
+   
     <title>Example dataset: Fleiss kappa for doc-2-doc relevance assessment</title>
   </head>
 
@@ -125,7 +142,7 @@
 
     <dt>License</dt>
     <dd>
-        <a href="https://spdx.org/licenses/CC-BY-4.0">Creative Commons Attribution 4.0 International</a>
+        <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International</a>
     </dd>
 
     <dt>Published</dt>
@@ -163,7 +180,10 @@
 </ul>
 </div>
 
-
+<!--
+    Optional Bioschemas  / schema.org markup, see 
+    https://github.com/zbmed-semtec/bioschemas-ghpages-markup-tutorial
+-->
 
 <script type="application/ld+json">
     {

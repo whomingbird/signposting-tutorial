@@ -56,8 +56,10 @@ In this tutorial we will cover:
     - [Where to add Signposting?](#where-to-add-signposting)
     - [Adding a persistent identifier](#adding-a-persistent-identifier)
       - [Using a w3id persistent identifier](#using-a-w3id-persistent-identifier)
-    - [Specifying the resource type](#specifying-the-resource-type)
     - [Specifying authors](#specifying-authors)
+    - [Specifying license](#specifying-license)
+    - [Specifying downloads](#specifying-downloads)
+    - [Listing metadata](#listing-metadata)
   - [Try it out](#try-it-out)
     - [Command line / Python](#command-line--python)
     - [Signposting in browser](#signposting-in-browser)
@@ -147,7 +149,7 @@ Signposting can be added in three ways:
 
 As this tutorial is neutral to deployment, and GitHub Pages do not permit control over HTTP headers, we will primarily work with option 2.
 
-* <img src="./icons/pen-to-square.svg" width="16" height="16" alt="Task:" />  To add the HTML links _to your forked repository_, now open [docs/7338056/index.html](docs/7338056/index.html) and click either _Edit in place_ button or the more powerful _Open with github.dev_.
+<img src="./icons/pen-to-square.svg" width="16" height="16" alt="Task:" />  To add the HTML links _to your forked repository_, now open [docs/7338056/index.html](docs/7338056/index.html) and click either _Edit in place_ button or the more powerful _Open with github.dev_.
 
 ![Screenshot: Edit file: Edit in place. Open with... github.dev](images/edit-icons.png "GitHub Edit options")
 
@@ -181,14 +183,12 @@ Make sure you add the new links within the `<head> .... </head>` section, as rec
 > F1. (meta)data are assigned a globally unique and persistent identifier  
 > ...  
 > F3. metadata clearly and explicitly include the identifier of the data it describes  
-> ...  
-> A1. (meta)data are retrievable by their identifier using a standardized communications protocol
 
 Persistent identifiers as expressed in Signposting using `rel="cite-as"` ([RFC8574](https://www.iana.org/go/rfc8574)) -- this allows a landing page to say which persistent identifier will redirect to the page.
 
 The original entry for this dataset has a DOI `10.5281/zenodo.7338056` -- however DOIs as untyped strings are not a good targets, as every Signposting has to be a valid [URI](https://en.wikipedia.org/wiki/Uniform_Resource_Identifier) -- typically starting with `http://` or `https://` followed by a domain name for the corresponding Web server. For DOIs we will therefore use the `https://doi.org/` _resolver_ -- to convert the DOI to a URI, simply add this as a prefix to become: <https://doi.org/10.5281/zenodo.7338056>
 
-* <img src="./icons/pen-to-square.svg" width="16" height="16" alt="Task" /> Modify docs/7338056/index.html so that it includes the signposting for the DOI `10.5281/zenodo.7338056`:
+<img src="./icons/pen-to-square.svg" width="16" height="16" alt="Task:" /> Modify docs/7338056/index.html so that it includes the signposting for the DOI `10.5281/zenodo.7338056`:
 
 ```html
 <link href="https://doi.org/10.5281/zenodo.7338056" rel="cite-as" />
@@ -203,11 +203,7 @@ alt text
 Add the below signposting to reflect your username, and use this instead as a `cite-as`:
 
 ```html
-<link href="https://w3id.org/signposting-tutorial/stain.7338056" rel="cite-as" />
-```
-
-Note that from the [FAIR Signposting level 1](https://signposting.org/FAIR/#level1) profile there should be only one `cite-as`, so in the doi.org version replace the link relation to `rel=related` or delete the line.
-
+<link href="https://w3id.org/signposting-tutorial/stain.7338056" https://spdx.org/licenses/CC-BY-4.0"
 <img src="./icons/citation.svg" width="16" height="16" alt="Literature:" /> If you manage a repository, you likely already assign persistent identifiers that can be used with `cite-as` -- if not, consider these resources:
 
 * [Identifiers for the 21st century](https://doi.org/10.1371/journal.pbio.2001414): How to design, provision, and reuse persistent identifiers to maximize utility and impact of life science data
@@ -220,7 +216,7 @@ Note that from the [FAIR Signposting level 1](https://signposting.org/FAIR/#leve
 
 The FAIR Signposting requires a `type` to classify the scholarly object, in our case a CSV file. 
 
-* <img src="./icons/citation.svg" width="16" height="16" alt="Literature:" /> Browse the [Schema.org hierarchy](https://schema.org/docs/full.html) to expand `CreativeWork` and find the type `Dataset` (other common types may be `ScholarlyArticle`, `ImageObject`, `SoftwareSourceCode`)
+<img src="./icons/citation.svg" width="16" height="16" alt="Literature:" /> Browse the [Schema.org hierarchy](https://schema.org/docs/full.html) to expand `CreativeWork` and find the type `Dataset` (other common types may be `ScholarlyArticle`, `ImageObject`, `SoftwareSourceCode`)
 
 <img src="./icons/code-compare.svg" width="16" height="16" alt="Task:" />  To specify `Dataset` as a type, use:
 
@@ -236,13 +232,85 @@ Now, the resource we are providing the signposting from is not technically speak
 <link href="https://schema.org/AboutPage" rel="type" />    
 ```
 
-This may be a good time to [try it out](#try-it-out) using a signposting clients to verify your changes to `index.html`.
+This may be a good time to [try it out](#try-it-out) using a signposting client to verify your changes to `index.html`.
 
 
 ### Specifying authors
 
+If each author of the resource have some persistent identifier (e.g. [ORCID](https://orcid.org/)), or other user page within the repository, we can list them using `author` link relation.
+
+<img src="./icons/pen-to-square.svg" width="16" height="16" alt="Task:" />  Add for each of the authors listed in the HTML their ORCID identifier using `rel="author"`:
+
+```html
+    <link href="https://orcid.org/0000-0003-2978-8922" rel="author" />
+```
+
+Note that if the author does not have a page but only a name, you can't provide a link nor persistent identifier, and so there is nothing to signpost to. Remember the purpose here is navigation, full semantics is however left in the metadata, which we'll cover later.
+
+### Specifying license
+
+In many cases, a repository entry has an open access or open source license. In this case it is very valuable to provide the `license` signposting, in order to indicate to clients what they are permitted to do with the download. 
+
+<img src="./icons/pen-to-square.svg" width="16" height="16" alt="Task:" />  In our first attempt, let's specify the [Creative Commons CC-BY 4.0](https://creativecommons.org/licenses/by/4.0/) license by using the URI as provided in the HTML:
+
+```html
+<link href="https://creativecommons.org/licenses/by/4.0/" rel="license" />
+```
+
+Needless to say, there are many possible license, each of which may have many identifiers. So while this link may be useful for humans, for machine actionability it is preferrably to use a known persistent identifier also for the license.
+
+<img src="./icons/citation.svg" width="16" height="16" alt="Literature:" /> The [SPDX License List](https://spdx.org/licenses/) is such a well known set of license identifiers. Identify the line for _"Creative Commons Attribution 4.0 International"_. Remember signposting can't go to untyped identifiers like `CC-BY-4.0` but needs a URI. Luckily SPDX provides such URIs e.g. <https://spdx.org/licenses/CC-BY-4.0> (although, for unexplained reasons, their list links to `.html` variants). 
+
+<img src="./icons/pen-to-square.svg" width="16" height="16" alt="Task:" /> Modify the above `license` to use the SPDX persistent identifier:
+
+```html
+<link href="https://spdx.org/licenses/CC-BY-4.0" rel="license" />
+```
+
+In other cases there is no single license, or the license is only embedded within the dataset. In this case you should not include a `license` as you don't have a single resource to link to.
+
+**Tip**: Make sure you use the US spelling of the link relation `license`!
 
 
+### Specifying downloads
+
+Returning to the FAIR Principles we also find:
+
+> A1. (meta)data are retrievable by their identifier using a standardized communications protocol
+
+If we accept that many persistent identifier goes to a HTML landing page, rather than directly to the downloadable data (which would then hide the metadata), **A1** must be enabled for machine through an indirection. In Signposting this is done using the `item` link relation.
+
+From the [existing HTML](https://stain.github.io/signposting-tutorial/7338056/#download) we find the CSV file as a Download link. 
+
+<img src="./icons/pen-to-square.svg" width="16" height="16" alt="Task:" />  Add the signposting for the download:
+
+```html
+<link 
+    href="https://zenodo.org/records/7338056/files/Fleiss%20Kappa%20for%20document-to-document%20relevant%20assessment.csv?download=1"
+    rel="item"
+    type="text/csv" />
+```
+
+Note that although `type` is optional, it is strongly recommended for downloads, specially if the server is unable to return a correct `Content-Type`. 
+
+<img src="./icons/citation.svg" width="16" height="16" alt="Literature:" />  See the [IANA media types](https://www.iana.org/assignments/media-types/) or [PRONOM](https://www.nationalarchives.gov.uk/PRONOM/) to find known file formats.
+
+
+It is possible to have additional downloads. For instance, Zenodo entries can have multiple uploads for a single DOI/landing page. In this tutorial repository, we have included the [fleiss.tsv](docs/7338056/fleiss.tsv) as an example of an additional resource, converted from the CSV to the Tabular Separated Values format .
+
+Add another download for our converted TSV file:
+
+```html
+<link 
+    href="fleiss.tsv"
+    rel="item"
+    type="text/tab-separated-values" />
+```
+
+**Note**: There is no indication in the outgoing links that these are alternatives of the same resource (the table). This could have to be done using `rel=alternate` at a HTTP header level for each of the files, however this is not required by Signposting. Likewise, provenance history of a conversion taking place would be the role of metadata to cover.
+
+
+### Listing metadata
 
 
 
@@ -305,7 +373,7 @@ Item: <https://zenodo.org/records/7338056/files/Fleiss%20Kappa%20for%20document-
 
 If you have made a mistake, this library is likely to skip the particular signposting, or give a warning.
 
-The Sigposting Python library can also be [used programmatically](https://signposting.readthedocs.io/) from other Python programs. See [Signposting adopters](https://signposting.org/adopters/) for a complete list of software and repositories working with Signposting.
+The Signposting Python library can also be [used programmatically](https://signposting.readthedocs.io/) from other Python programs. See [Signposting adopters](https://signposting.org/adopters/) for a complete list of software and repositories working with Signposting.
 alt text
 
 ### Signposting in browser
