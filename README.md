@@ -95,29 +95,30 @@ Do not forget to check out a local copy of your fork so you can make changes -- 
 
 ### Overview of the repository
 
-This repository is emulating a basic HTML-based institutional repository, with a single dataset entry corresponding to Zenodo's entry:
+This repository is emulating a basic HTML-based institutional repository, with a single dataset entry corresponding to a Zenodo's entry. Layout:
 
 * [docs/](docs/) The Web root, as deployed above. Note that your deployment will use a hostname similar to `stain.github.io` but reflecting your username.
   - [docs/7338056/](docs/7338056/) A single dataset, based on a <a href="https://doi.org/10.5281/zenodo.7338056">real Zenodo entry</a>
     + [docs/7338056/index.html](docs/7338056/index.html) HTML for the dataset 7338056, at start of tutorial _without any signposting_
     + [docs/7338056/solution.html](docs/7338056/solution.html) Modified `index.html` after following this tutorial. Do not peek here until you have done the exercises!
     + [docs/7338056/bioschemas.jsonld](docs/7338056/bioschemas.jsonld) Bioschemas JSON-LD metadata as in the tutorial [bioschemas-ghpages-markup-tutorial](https://github.com/zbmed-semtec/bioschemas-ghpages-markup-tutorial), but extracted from `<script>` tag 
+    + [docs/7338056/fleiss.tsv](docs/7338056/fleiss.tsv) a file in tabuler-separated value format (converted from CSV)
 
 The remaining dataset and metadata downloads are in this case shown as deeplinks to Zenodo to indicate that Signposting is not tied to a particular domain.
 
-Signposting is added at HTTP or HTML-level, and this tutorial is deployed using [GitHub Pages](https://pages.github.com/). For simplicity it uses static HTML files based on a [Bootstrap v5 starter template](https://getbootstrap.com/docs/5.0/getting-started/introduction) -- applying Signposting to a real repository deployment may require editing of its HTML templates, which is currently out of scope for this tutorial.
+This tutorial is deployed using [GitHub Pages](https://pages.github.com/) as described above. For simplicity it uses static HTML files based on a [Bootstrap v5 starter template](https://getbootstrap.com/docs/5.0/getting-started/introduction) -- applying Signposting to a real repository deployment may require editing   its HTML templates, which is currently out of scope for this tutorial.
 
 
 ### Challenge of machine actionability
 
-Look at HTML page <https://stain.github.io/signposting-tutorial/7338056/> and open the HTML code in [docs/7338056/index.html](docs/7338056/index.html). 
+Look at HTML page <https://stain.github.io/signposting-tutorial/7338056/> (or equivalent for your username) and open the HTML code in [docs/7338056/index.html](docs/7338056/index.html). 
 This is a somewhat typical _landing page_ for a Web-based data repository. We will imagine that the persistent identifier (DOI) has redirected to this page, as is the case for the original <https://doi.org/10.5281/zenodo.7338056>
 
 ![Screenshot of landing page, showing metadata, download links etc](images/landing-page.png "HTML landing page")
 
-We see that the landing page is quite useful for humans, including an abstract, metadata including title, author, keywords, and a big download button. There are some export formats listed at the end for formats like Bibtex.
+We see that the landing page is quite useful for humans, including an abstract; metadata including title, author, keywords; and a big download button. There are some export formats listed at the end for metadata formats like Bibtex.
 
-The tutorial [bioschemas-ghpages-markup-tutorial](https://github.com/zbmed-semtec/bioschemas-ghpages-markup-tutorial) highlights how this kind of metadata can be made machine-readable in a FAIR format -- which for completeness is included in the `<script>` tag at the end of the HTML. This however just one of the many ways that FAIR metadata can be provided, and many repositories (as shown in this example).
+The tutorial [bioschemas-ghpages-markup-tutorial](https://github.com/zbmed-semtec/bioschemas-ghpages-markup-tutorial) highlights how this kind of metadata can be made machine-readable in a FAIR format -- which for completeness is included in the `<script>` tag at the end of the HTML. Bioschemas is however just one of the many ways that FAIR metadata can be provided (as shown in this example).
 
 However, a machine (example: pre-programmed script) who accesses the given persistent identifier, and do not already know this particular repository implementation or Bioschemas, is not immediately able to answer the most basic FAIR questions:
 
